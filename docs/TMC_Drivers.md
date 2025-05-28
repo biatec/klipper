@@ -497,6 +497,22 @@ power plugs).
 Otherwise, this error is typically the result of incorrect UART pin
 wiring or an incorrect Klipper configuration of the UART pin settings.
 
+The UART-based TMC stepper drivers (tmc2209, tmc2225, and tmc2226)
+utilize the MS1 and MS2 pins to set their UART addresses. This
+addressing capability allows multiple stepper drivers to share
+a single UART communication line.
+
+To configure multiple drivers on one UART line in Klipper, you must
+explicitly specify the uart_address for each driver in your printer.cfg.
+Also if you keep MS1 and MS2 jumpers in the control board the driver will
+listen to UART address 3.
+```
+[tmc2209 stepper_x]
+...
+uart_address: 3
+...
+```
+
 ### I keep getting "Unable to write tmc spi 'stepper_x' register ..." errors?
 
 This occurs when Klipper is unable to communicate with a tmc2130 or
